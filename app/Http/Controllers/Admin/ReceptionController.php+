@@ -1,0 +1,56 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Models\User;
+use App\Models\Appointment;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Library\Services\DbHelperTools;
+
+class ReceptionController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function index()
+    {
+        // $doctors = User::all()->where('user_type', 'doctor');
+        // return view('admin.users',compact('users'));
+        $half_year_ago = date("Y-m-d H:i:s",strtotime("-6 month"));
+        $one_month_ago = date("Y-m-d H:i:s",strtotime("-30 day"));
+         $receptions = DB::table('users')
+            ->leftJoin('appointments', 'users.id', '=', 'appointments.appuser_id')
+            ->select('users.id', 'users.name', 'appointments.patient_id', 'appointments.created_at', 'appointments.status')
+            ->where('users.user_type', '=', 'reception')
+            // ->where('appointments.created_at', '>=', $half_year_ago)
+            ->get();
+        $name_arr = [];
+        $appointments_arr = [];
+        $rate1_arr = [];
+        $rate2_arr = [];
+        $last_patient = [];
+        // dd($receptions);
+        foreach($receptions as $reception) {
+            if(!in_array($reception->name, $name_arr)) array_push($name_arr, $reception->name);
+            if(strtotime($reception->created_at) > strtotime($one_month_ago) ) {
+                if(isset($appointments_arr[$reception->name])) $appointments_arr[$reception->name]++;
+                else $appointments_arr[$reception->name] = 1;
+            }
+            if(strtotime($reception->created_at) > strtotime($half_year_ago)) {
+                if($reception->status == 1) {
+                    if(isset($rate1_arr[$reception->name][$reception->patient_id])) $rate1_arr[$reception->name][$reception->patient_id]++;
+                    else $rate1_arr[$reception->name][$reception->patient_id] = 1;
+                }else{
+                    if(isset($rate2_arr[$reception->name][$reception->patient_id])) $rate2_arr[$reception->name][$reception->patient_id]++;
+                    else $rate2_arr[$reception->name][$reception->patient_id] = 1;
+                }
+            }
+            $last_patient[$reception->name] = $reception->patient_id;
+        }
+        // dd($name_arr,$appointments_arr, $rate_arr);
+        return view('admin.reception', compact('name_arr','appointments_arr','rate1_arr','rate2_arr','last_patient'));
+    }
+}

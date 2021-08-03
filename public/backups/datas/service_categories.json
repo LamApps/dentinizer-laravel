@@ -1,0 +1,58 @@
+[
+ {
+   "id": 1,
+   "parent_id": null,
+   "name": "Diagnosis and oral care",
+   "name_ar": "التشخيص والرعاية عن طريق الفم",
+   "path_icon": null
+ },
+ {
+   "id": 2,
+   "parent_id": null,
+   "name": "Restorative Treatment (Operative)",
+   "name_ar": "العلاج التحفظي",
+   "path_icon": null
+ },
+ {
+   "id": 3,
+   "parent_id": null,
+   "name": "Restorative Treatment (Endodontic)",
+   "name_ar": "علاج الجذور",
+   "path_icon": null
+ },
+ {
+   "id": 4,
+   "parent_id": null,
+   "name": "Pedodontics",
+   "name_ar": "طب أسنان الأطفال",
+   "path_icon": null
+ },
+ {
+   "id": 5,
+   "parent_id": null,
+   "name": "Prosthodontics",
+   "name_ar": "التركيبات الثابته و المتحركة",
+   "path_icon": null
+ },
+ {
+   "id": 6,
+   "parent_id": null,
+   "name": "Oral Surgery ",
+   "name_ar": "جراحة الفم",
+   "path_icon": null
+ },
+ {
+   "id": 7,
+   "parent_id": null,
+   "name": "Orthodontics",
+   "name_ar": "تقويم الأسنان",
+   "path_icon": null
+ },
+ {
+   "id": 8,
+   "parent_id": null,
+   "name": "Derma",
+   "name_ar": "جلديه",
+   "path_icon": null
+ }
+]

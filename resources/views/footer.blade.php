@@ -1,0 +1,1 @@
+<footer class="main-footer">© <?php echo date('Y') ?> Appointment</footer>

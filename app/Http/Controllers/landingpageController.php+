@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Subdomain;
+use Illuminate\Http\Request;
+
+class landingpageController extends Controller
+{
+    public function index(){
+        return view('landingpage.index');
+    }
+    public function searchSubdomain(Request $request) {
+        $msg='Subdomain not found';
+        $cssClass='text-danger';
+        $success=false;
+        $host = request()->getHost();
+        $http='https://';
+        $loginRoute='/login';
+		$subdomain = $http.$host.$loginRoute;
+        if ($request->isMethod('post')) {
+            if($request->has('subdomain')){
+                $rs=Subdomain::select('subdomain')->where('subdomain',$request->subdomain)->first();
+                if($rs){
+                    $subdomain = $http.$rs->subdomain.'.'.$host.$loginRoute;
+                    $success=true;
+                    $msg='Subdomain found';
+                    $cssClass='text-success';
+                }
+            }
+        }         
+        return response ()->json ( [ 
+                'success' => $success,
+                'subdomain' => $subdomain,
+                'msg' => $msg,
+                //'cssClass' => $cssClass,
+        ] );
+    }
+}
